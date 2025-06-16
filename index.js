@@ -24,16 +24,11 @@ app.get('/user', (req, res) => {
         details: errors.mail
       }
     });
-  }
+  }else{
+return res.("ok")
 
   // Utilisation du logging
-  try {
-    const ans = logging.logUser(user);
-    res.json(ans);
-  } catch (err) {
-    console.error("Logging error:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
+ 
 });
 
 // N'oubliez pas d'exporter l'app pour Vercel
