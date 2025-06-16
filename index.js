@@ -26,7 +26,7 @@ app.get('/user', (req, res) => {
     });
   }else{
 return res.("ok")
-
+} 
   // Utilisation du logging
  
 });
