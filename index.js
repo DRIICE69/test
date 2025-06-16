@@ -1,25 +1,40 @@
 const JsonDB = require('litejsondb');
+const express = require('express');
+const logging = require('./logging'); // Déplacer l'import en haut
 
-// Initialize a basic database
+// Initialize database
 const db = new JsonDB("flynum.json");
 
-const express = require('express');
 const app = express();
-let error = {"err":{"user":"user required","mail":"unvaild or malformed mail"},};
+
+// Correction de la structure d'erreur
+const errors = {
+  user: "user required",
+  mail: "invalid or malformed mail"
+};
+
 app.get('/user', (req, res) => {
   const user = req.query.user;
-if(!user){
-res.send(JSON.stringify(error.err.mail))
-return;
-}else{
+  
+  if(!user) {
+    // Correction de la réponse d'erreur
+    return res.status(400).json({ 
+      error: {
+        message: errors.user,
+        details: errors.mail
+      }
+    });
+  }
 
-const logging = require('./logging');
-
-let ans = logging.logUser(user)
-res.send(ans)
-}
- 
+  // Utilisation du logging
+  try {
+    const ans = logging.logUser(user);
+    res.json(ans);
+  } catch (err) {
+    console.error("Logging error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
-//app.listen(3000);
 
+// N'oubliez pas d'exporter l'app pour Vercel
 module.exports = app;
