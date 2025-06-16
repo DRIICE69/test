@@ -1,9 +1,9 @@
-const JsonDB = require('litejsondb');
+const Json_DB = require('litejsondb');
 const express = require('express');
 //const logging = require('./logging');
 
 // Initialize database
-//const db = new JsonDB("flynum.json");
+//const db = new Json_DB("flynum.json");
 const app = express();
 
 // Correction de la structure d'erreur
