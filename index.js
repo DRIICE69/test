@@ -1,4 +1,4 @@
-//const JsonDB = require('litejsondb');
+const JsonDB = require('litejsondb');
 const express = require('express');
 //const logging = require('./logging');
 
@@ -20,7 +20,7 @@ app.get('/user', (req, res) => {
   } else {
     // Utilisation du logging
     //let ans = logging.logUser(user);
-    return res("ans");
+    return res.("ans");
   }
 });
 
