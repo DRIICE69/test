@@ -1,16 +1,25 @@
+const JsonDB = require('litejsondb');
+
+// Initialize a basic database
+const db = new JsonDB("flynum.json");
+
 const express = require('express');
 const app = express();
-
-app.get('/', (req, res) => {
+let error = {"err":{"user":"user required","mail":"unvaild or malformed mail"},};
+app.get('/user', (req, res) => {
   const user = req.query.user;
-  const mail = req.query.mail;
-  const amount = req.query.amount;
+if(!user){
+res.send(JSON.stringify(error.err.mail))
+return;
+}else{
 
-  //console.log(`User : ${user}`);
-  //console.log(`Mail : ${mail}`);
-  //console.log(`Amount : ${amount}`);
+const logging = require('./logging');
 
-  res.send(`Transaction pour ${user} (${mail}) d'un montant de ${amount}`);
+let ans = logging.logUser(user)
+res.send(ans)
+}
+ 
 });
+//app.listen(3000);
 
 module.exports = app;
