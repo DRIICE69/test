@@ -20,7 +20,7 @@ app.get('/user', (req, res) => {
   } else {
     // Utilisation du logging
     //let ans = logging.logUser(user);
-    return re("ans");
+    return res("ans");
   }
 });
 
