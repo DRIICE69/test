@@ -1,6 +1,6 @@
 //const JsonDB = require('litejsondb');
 const express = require('express');
-const logging = require('./logging');
+//const logging = require('./logging');
 
 // Initialize database
 //const db = new JsonDB("flynum.json");
