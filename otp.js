@@ -10,13 +10,13 @@ async function check(user, code){
 
 try{
 
-const response = await fetch(`https://getpantry.cloud/apiv1/pantry/${id}/basket/flynum_users`, requestOptions);
+const response = await fetch(`https://getpantry.cloud/apiv1/pantry/${appid}/basket/flynum_users`, requestOptions);
     const existed_users = await response.json();
 
     if (user in existed_users) {
       const info = existed_users[user];
       const otp = info.otp;
-      const hv_id = info.customer_id;
+      
 
       // Si l'user est verifié
       if (otp === code) {
@@ -35,7 +35,7 @@ const response = await fetch(`https://getpantry.cloud/apiv1/pantry/${id}/basket/
             redirect: 'follow'
           };
 
-          const updateResponse = await fetch(`https://getpantry.cloud/apiv1/pantry/${id}/basket/flynum_users`, updateOptions);
+          const updateResponse = await fetch(`https://getpantry.cloud/apiv1/pantry/${appid}/basket/flynum_users`, updateOptions);
           const updateResult = await updateResponse.json();
 
           if (user in updateResult) {
@@ -51,6 +51,11 @@ const response = await fetch(`https://getpantry.cloud/apiv1/pantry/${id}/basket/
 } catch (error) {
     console.error('Error:', error);
    // throw error; // Propage l'erreur pour la gestion dans le code appelant
-  }
+  }else{
+return JSON.stringify({
+              "mail" :user, "success": "no",
+              "balance": 0, "otp":"" 
+            });
+} 
 
 } 
