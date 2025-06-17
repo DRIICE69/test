@@ -1,78 +1,63 @@
-function logUser(user) {
-const appid = "78f28e0c-915a-4dfc-9e95-0c52106af653"  
-  var myHeaders ={"Content-Type": "application/json"};
+async function logUser(user) {
+  const appid = "78f28e0c-915a-4dfc-9e95-0c52106af653";
+  const myHeaders = { "Content-Type": "application/json" };
 
-var raw = "";
+  try {
+    // Première requête GET pour récupérer les utilisateurs existants
+    const requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
 
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
- // body: raw,
-  redirect: 'follow'
-};
+    const response = await fetch(`https://getpantry.cloud/apiv1/pantry/${appid}/basket/flynum_users`, requestOptions);
+    const existed_users = await response.json();
 
-fetch("https://getpantry.cloud/apiv1/pantry/"+appid+"/basket/flynum_users", requestOptions)
-  .then(response => response.json())
-  .then(result => {
-  let existed_users = result;
- 
- if(user in existed_users){
- let info = existed_users.user
- 
- let reply = JSON.stringify({
- "blance":info.balance,
- })
- //console.log(reply)
- res.send(reply)
- 
- }else{
- 
+    if (user in existed_users) {
+      // Si l'utilisateur existe déjà
+      const info = existed_users[user]; // Correction: existed_users.user -> existed_users[user]
+      const reply = JSON.stringify({
+        "balance": info.balance
+      });
+      return reply;
+    } else {
+      // Si l'utilisateur n'existe pas, on le crée
+      const content = JSON.stringify({
+        [user]: {
+          "otp": 1234,
+          "balance": 0,
+          "hv_num": 0,
+          "name": "",
+          "last_name": "",
+          "number": "",
+          "customer_id": "",
+          "last_connexion": "",
+        }
+      });
 
- 
- var content = JSON.stringify({
- [user]:{
- "otp":1234,
- "balance": 0,
- "hv_num": 0,
- "name":"",
- "last_name":"",
- "number":"",
- "customer_id":"",
- "last_connexion":"",
- }
- 
- });
- 
- var Options = {
- method: 'PUT',
- headers: myHeaders,
- body: content,
- redirect: 'follow'
- };
- 
- fetch("https://getpantry.cloud/apiv1/pantry/"+appid+"/basket/flynum_users", Options)
- .then(response => response.json())
- .then(result =>{
-  if(user in result){
- 
- let reply = JSON.stringify({
- "success":"yes","balance":0,"otp":""})
- res.send(reply)
- //console.log(result.user)
- }
- }
- )
- .catch(error => console.log('error', error));
- 
- 
- }
-  
+      const Options = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: content,
+        redirect: 'follow'
+      };
 
-}
-  
-  )
-  .catch(error => console.log('error', error));
+      const createResponse = await fetch(`https://getpantry.cloud/apiv1/pantry/${appid}/basket/flynum_users`, Options);
+      const result = await createResponse.json();
 
+      if (user in result) {
+        const reply = JSON.stringify({
+          "success": "yes",
+          "balance": 0,
+          "otp": ""
+        });
+        return reply;
+      }
+    }
+  } catch (error) {
+    console.log('error', error);
+ 
+  }
 }
 
 module.exports = { logUser };
