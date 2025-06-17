@@ -34,7 +34,7 @@ app.get('/user', (req, res) => {
 app.get('/otp', (req, res) => {
   const user = req.query.user;
 const code = req.query.otp
-  if (!user || !otp) {
+  if (!user || !code) {
     return res.status(400).json({ error: errors.user });
   } else {
     // Authentification avec gestion de la promesse
