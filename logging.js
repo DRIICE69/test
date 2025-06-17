@@ -57,13 +57,15 @@ const requestOptions = {
 
           if (user in updateResult) {
             return JSON.stringify({
+               "mail" :user, 
               "success": "yes",
               "balance": 0
             });
           }
         } else {
           return JSON.stringify({
-            "success": "yes",
+            "mail" :user, 
+"success": "yes",
             "balance": info.balance,
           });
         }
@@ -71,6 +73,7 @@ const requestOptions = {
         return JSON.stringify({
           "success": "yes",
           "otp": "",
+"mail" :user, 
           "balance": info.balance
         });
       }
@@ -103,7 +106,7 @@ const requestOptions = {
         return JSON.stringify({
           "success": "yes",
           "balance": 0,
-          "otp": ""
+          "otp": "", "mail" :user, 
         });
       }
     }
