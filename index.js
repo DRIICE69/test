@@ -1,7 +1,7 @@
 const express = require('express');
 const logging = require('./logging');
 const checkOtp = require('./otp')
-const GetNum = require('./list_num');
+const GetUserNum = require('./list_num');
 const app = express();
 const id = "78f28e0c-915a-4dfc-9e95-0c52106af653";
 
@@ -57,7 +57,7 @@ app.get('/list_num', (req, res) => {
     return res.status(400).json({ error: errors.user });
   } else {
     // Authentification avec gestion de la promesse
-    GetNum.listNum(user)
+    GetUserNum.listNum(user)
       .then((response) => {
         res.send(response)
       })
