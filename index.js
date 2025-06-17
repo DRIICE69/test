@@ -29,7 +29,7 @@ app.get('/user', (req, res) => {
   }
 });
 
-//OTP
+////OTP
 
 app.get('/otp', (req, res) => {
   const user = req.query.user;
