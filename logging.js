@@ -3,6 +3,13 @@ async function logUser(user) {
   const myHeaders = { "Content-Type": "application/json" };
 
    try {
+
+const requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
     // Première requête GET pour récupérer les utilisateurs existants
     const response = await fetch(`https://getpantry.cloud/apiv1/pantry/${appid}/basket/flynum_users`, requestOptions);
     const existed_users = await response.json();
