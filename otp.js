@@ -36,6 +36,7 @@ async function check(user, code) {
 
                 if (user in updateResult) {
                     return JSON.stringify( {
+otpStatus:"valid",
                         mail: user,
                         success: "yes",
                         balance: info.balance || 0
