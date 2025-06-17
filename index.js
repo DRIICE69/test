@@ -1,9 +1,3 @@
-const express = require('express');
-const logging = require('./logging');
-const checkOtp = require('./otp')
-const GetNum = require('./list_num');
-const app = express();
-const id = "78f28e0c-915a-4dfc-9e95-0c52106af653";
 
 const errors = {
   user: "user required",
